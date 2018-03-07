@@ -1,0 +1,10 @@
+package com.table;
+
+public class FrequencyCalculator {
+
+	public FrequencyTableCalculator() {
+		// TODO Auto-generated constructor stub
+	}
+
+	
+}

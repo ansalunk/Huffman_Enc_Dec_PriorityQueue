@@ -1,0 +1,24 @@
+package com.datastructure;
+
+public class PairNode {
+
+		int element;
+	    PairNode leftChild;
+	    PairNode nextSibling;
+	    PairNode prev;
+	    int freq;
+	 
+	    /* Constructor */
+	    public PairNode(int x)
+	    {
+	        element = x;
+	        leftChild = null;
+	        nextSibling = null;
+	        prev = null;
+	    }
+
+		public PairNode() {
+			// TODO Auto-generated constructor stub
+			super();
+		}
+}

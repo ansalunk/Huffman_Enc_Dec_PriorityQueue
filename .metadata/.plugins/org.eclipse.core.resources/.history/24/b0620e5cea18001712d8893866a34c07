@@ -1,0 +1,185 @@
+package com.datastructure;
+
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
+
+
+public class BinaryHeap {
+	
+	   /** The number of children each node has **/
+	    private static final int d = 2;
+	    //private int heapSize;
+	    private ArrayList<TreeNode> heap;
+	 
+	    /** Constructor **/    
+	    public BinaryHeap()
+	    {
+	       // heapSize = 0;
+	        heap = new ArrayList<TreeNode>();
+	       // Arrays.fill(heap., -1);
+	    }
+	 
+	    /** Function to check if heap is empty **/
+	    public boolean isEmpty( )
+	    {
+	        return heap.size() == 0;
+	    }
+	 
+	   /* *//** Check if heap is full **//*
+	    public boolean isFull( )
+	    {
+	        return heapSize == heap.length;
+	    }*/
+	 
+	   /* *//** Clear heap *//*
+	    public void makeEmpty( )
+	    {
+	         = 0;
+	    }
+	 */
+	    /** Function to  get index parent of i **/
+	    private int parent(int i) 
+	    {
+	        return (i - 1)/d;
+	    }
+	 
+	    /** Function to get index of k th child of i **/
+	    private int kthChild(int i, int k) 
+	    {
+	        return d * i + k;
+	    }
+	 
+	    /** Function to insert element */
+	    public void insert(TreeNode node)
+	    {
+	       
+	      /*  *//** Percolate up **//*
+	        heap.add(x);
+	        heapifyUp(heap.size() - 1);*/
+	    	
+	    	heap.add(node);
+			int currentSize = heap.size()-1;
+			int posParent = parent(currentSize); 
+			while(posParent != currentSize && heap.get(posParent).getFreq()> heap.get(currentSize).getFreq())
+			{
+				TreeNode temp = heap.get(currentSize);
+				heap.set(currentSize, heap.get(posParent));
+				heap.set(posParent, temp);
+				currentSize = posParent;
+				posParent = parent(currentSize);
+			}
+	    }
+	 
+	    /** Function to find least element **/
+	    public TreeNode findMin( )
+	    {
+	        if (isEmpty() )
+	            throw new NoSuchElementException("Underflow Exception");           
+	        return heap.get(0);
+	    }
+	 
+	    /** Function to delete min element **/
+	    public TreeNode deleteMin()
+	    {
+	       /* TreeNode keyItem = heap.get(0);
+	        delete(0);
+	        return keyItem;*/
+	    	if(heap.size() <= 0)
+				throw new NoSuchElementException();
+			if(heap.size() == 0)
+				return heap.remove(0);
+			else{
+				TreeNode temp = heap.get(0);
+				int swapPos = heap.size()-1;
+				heap.set(0, heap.get(swapPos));
+				heap.set(swapPos, temp);
+			TreeNode minNode = heap.remove(swapPos);
+			heapifyDown(0);
+			
+			return minNode;
+			}
+			
+	    }
+	 
+	    /** Function to delete element at an index **//*
+	    public TreeNode delete(int ind)
+	    {
+	        if (isEmpty() )
+	            throw new NoSuchElementException("Underflow Exception");
+	        TreeNode keyItem = heap.get(ind);
+	        //heap.set(ind, heap.get(heap.size() - 1));
+	        //heapSize--;
+	        heap.remove(ind);
+	        heapifyDown(ind);        
+	        return keyItem;
+	    }
+	 */
+	    /** Function heapifyUp  **//*
+	    private void heapifyUp(int childInd)
+	    {
+	        TreeNode tmp = heap.get(childInd);    
+	        while (childInd > 0 && tmp.getFreq() < heap.get(parent(childInd)).getFreq())
+	        {
+	            heap.set(childInd, heap.get(parent(childInd)));
+	            childInd = parent(childInd);
+	        }                   
+	        heap.set(childInd, tmp);
+	    }
+*/	 
+	    /** Function heapifyDown **/
+	    private void heapifyDown(int ind)
+	    {
+	        int child;
+	        TreeNode tmp = heap.get(ind);
+	        while (kthChild(ind, 1) < heap.size())
+	        {
+	            child = minChild(ind);
+	            if (heap.get(child).getFreq() < tmp.getFreq())
+	                heap.set(ind, heap.get(child));
+	            else
+	                break;
+	            ind = child;
+	        }
+	        heap.set(ind, tmp);	    }
+	 
+	    /** Function to get smallest child **/
+	    private int minChild(int ind) 
+	    {
+	        int bestChild = kthChild(ind, 1);
+	        int k = 2;
+	        int pos = kthChild(ind, k);
+	        while ((k <= d) && (pos < heap.size())) 
+	        {
+	            if (heap.get(pos).getFreq() < heap.get(bestChild).getFreq()) 
+	                bestChild = pos;
+	            pos = kthChild(ind, k++);
+	        }    
+	        return bestChild;
+	    }
+	 
+	    /** Function to print heap **/
+	    public void printHeap()
+	    {
+	        System.out.print("\nHeap = ");
+	        for (int i = 0; i < heap.size(); i++)
+	            System.out.println(heap.get(i).getNode() +" --->" + heap.get(i).getFreq());
+	        System.out.println();
+	    }
+
+		public int getHeapSize() {
+			return heap.size();
+		}
+
+		
+	    
+	/*	public void build_tree_using_binary_heap(Map<Integer, Integer> map) {
+			
+			for (int key : map.keySet()) {
+			   insert(key);
+			}
+			
+		}
+*/
+	}
+	 

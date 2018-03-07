@@ -1,0 +1,27 @@
+package com.table;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+
+public class FrequencyCalculator {
+
+	public static void main(String[] args) throws IOException {
+	
+	Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+
+	int count =0;
+	for(int i=0;i<args.length;i++){  
+		
+		if(map.containsKey(args[i])){
+			map.put(Integer.parseInt(args[i]), count+1);
+		}else
+			map.put(Integer.parseInt(args[i]), 1);
+		  
+		}  
+ 
+}
+

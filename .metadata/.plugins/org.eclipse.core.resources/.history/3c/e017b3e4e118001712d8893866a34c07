@@ -1,0 +1,122 @@
+package com.datastructure;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
+
+
+public class FourWayH{
+	
+	TreeNode[] fHeap;
+	static FourWayHeap fourWayHeap;
+	private int heapSize;
+
+	public FourWayH(int capacity) {
+		heapSize = 0;
+        fHeap = new TreeNode[capacity + 4];
+        Arrays.fill(fHeap, -1);
+	}
+	public int getHeapSize() {
+		return fHeap.length-3;
+	}
+	public void insert(TreeNode node) {
+		// TODO Auto-generated method stub
+		
+		fHeap[heapSize++]=node;
+		int currentSize = fHeap.length-1;
+		int posParent = parent(currentSize); 
+		while(posParent != currentSize && fHeap[posParent].getFreq()> fHeap[currentSize].getFreq())
+		{
+			TreeNode temp = fHeap[currentSize];
+			fHeap[currentSize]=fHeap[posParent];
+			fHeap[posParent]=temp;
+			currentSize = posParent;
+			posParent = parent(currentSize);
+		}
+		
+		/*for(int pos=3; pos<fHeap.size()/2-1; pos--){
+			heapify(pos);
+		}*/
+
+	}
+	
+
+    /** Function to check if heap is empty **/
+    public boolean isEmpty( )
+    {
+        return fHeap.length == 3;
+    }
+	
+	 /** Function to find least element **/
+    public TreeNode findMin( )
+    {
+        if (isEmpty() )
+            throw new NoSuchElementException("Underflow Exception");           
+        return fHeap[3];
+    }
+ 
+	
+	private int parent(int i) {
+		// TODO Auto-generated method stub
+
+		return (int)Math.floor(((i-4)/4) + 3);
+	}
+	public void heapify(int posParent) {
+		// TODO Auto-generated method stub
+		int childPos = 4*(posParent-3)+3;
+		int i=1;
+		int minValue = posParent;
+		while(i<5){
+			childPos++;
+			if(childPos<fHeap.length){
+				if(childPos<fHeap.length && fHeap[childPos].getFreq()<fHeap[minValue].getFreq()){
+					minValue = childPos;
+				}
+			}
+			i++;
+		}
+		if(minValue!=posParent){
+			TreeNode temp = fHeap[posParent];
+			fHeap[posParent] = fHeap[minValue];
+			fHeap[minValue] = temp;
+			heapify(minValue);
+		}
+		
+	}
+	
+	public TreeNode deleteMin(){
+		// TODO Auto-generated method stub
+
+		if(fHeap.length <= 3)
+			throw new NoSuchElementException();
+		if(fHeap.length == 4){
+			TreeNode temp = fHeap[3];
+			Arrays.fill(fHeap, 0, 3, -1);
+			return temp;
+		}
+		else{
+			TreeNode temp = fHeap.get(3);
+			int swapPos = fHeap.size()-1;
+		fHeap.set(3, fHeap.get(swapPos));
+		fHeap.set(swapPos, temp);
+		TreeNode minNode = fHeap.remove(swapPos);
+		heapify(3);
+		return minNode;
+		}
+		
+		
+	}
+	
+	
+	 /** Function to print heap **/
+    public void printHeap()
+    {
+        System.out.print("\nHeap = ");
+        for (int i = 3; i < fHeap.size(); i++)
+            System.out.println(fHeap.get(i).getNode() +" .. " + fHeap.get(i).getFreq());
+
+        System.out.println();
+    }  
+	
+	
+}

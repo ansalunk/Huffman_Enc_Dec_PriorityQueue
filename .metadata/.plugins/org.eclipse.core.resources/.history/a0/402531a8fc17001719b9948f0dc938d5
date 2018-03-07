@@ -1,0 +1,137 @@
+package com.datastructure;
+
+
+/* Class DecodeHuffmanTree */
+class DecodeHuffmanTree
+{
+    private TreeNode root;
+
+    /* Constructor */
+    public DecodeHuffmanTree()
+    {
+        root = null;
+    }
+    /* Function to check if tree is empty */
+    public boolean isEmpty()
+    {
+        return root == null;
+    }
+    /* Functions to insert data */
+    public void insert(int data)
+    {
+        root = insert(root, data);
+    }
+    /* Function to insert data recursively */
+    private TreeNode insert(TreeNode node, int data)
+    {
+        if (node == null)
+            node = new TreeNode(data);
+        else
+        {
+            if (data <= node.getNode())
+                node.left = insert(node.left, data);
+            else
+                node.right = insert(node.right, data);
+        }
+        return node;
+    }
+    /* Functions to delete data */
+    public void delete(int k)
+    {
+        if (isEmpty())
+            System.out.println("Tree Empty");
+        else if (search(k) == false)
+            System.out.println("Sorry "+ k +" is not present");
+        else
+        {
+            root = delete(root, k);
+            System.out.println(k+ " deleted from the tree");
+        }
+    }
+    private TreeNode delete(TreeNode root, int k)
+    {
+        TreeNode p, p2, n;
+        if (root.getNode() == k)
+        {
+            TreeNode lt, rt;
+            lt = root.getLeft();
+            rt = root.getRight();
+            if (lt == null && rt == null)
+                return null;
+            else if (lt == null)
+            {
+                p = rt;
+                return p;
+            }
+            else if (rt == null)
+            {
+                p = lt;
+                return p;
+            }
+            else
+            {
+                p2 = rt;
+                p = rt;
+                while (p.getLeft() != null)
+                    p = p.getLeft();
+                p.setLeft(lt);
+                return p2;
+            }
+        }
+        if (k < root.getNode())
+        {
+            n = delete(root.getLeft(), k);
+            root.setLeft(n);
+        }
+        else
+        {
+            n = delete(root.getRight(), k);
+            root.setRight(n);             
+        }
+        return root;
+    }
+    /* Functions to count number of nodes */
+    public int countNodes()
+    {
+        return countNodes(root);
+    }
+    /* Function to count number of nodes recursively */
+    private int countNodes(TreeNode r)
+    {
+        if (r == null)
+            return 0;
+        else
+        {
+            int l = 1;
+            l += countNodes(r.getLeft());
+            l += countNodes(r.getRight());
+            return l;
+        }
+    }
+    /* Functions to search for an element */
+    public boolean search(int val)
+    {
+        return search(root, val);
+    }
+    /* Function to search for an element recursively */
+    private boolean search(TreeNode r, int val)
+    {
+        boolean found = false;
+        while ((r != null) && !found)
+        {
+            int rval = r.getNode();
+            if (val < rval)
+                r = r.getLeft();
+            else if (val > rval)
+                r = r.getRight();
+            else
+            {
+                found = true;
+                break;
+            }
+            found = search(r, val);
+        }
+        return found;
+    }
+       
+}

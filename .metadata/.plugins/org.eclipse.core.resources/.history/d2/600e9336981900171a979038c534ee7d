@@ -1,0 +1,47 @@
+package com.datastructure;
+
+public class PairNode {
+
+	  int node;
+	    PairNode leftChild;
+	    PairNode nextSibling;
+	    PairNode prev;
+	    int freq;
+	 
+	    /* Constructor */
+	    /*public PairNode(int x)
+	    {
+	        node = x;
+	        leftChild = null;
+	        nextSibling = null;
+	        prev = null;
+	    }*/
+	    
+	    PairNode(int freq){
+	        this.freq = freq;
+	        leftChild = null;
+	        nextSibling = null;
+	        prev = null;
+	     }
+	     
+	      public PairNode(){
+	  	     super();
+	  	   }
+	     
+	      
+	     public PairNode(int node, int freq){
+	        this.freq = freq;
+	        this.node = node;
+	        this.left = this.right = null;
+	     }
+
+		public int getFreq() {
+			return freq;
+		}
+
+		public void setFreq(int freq) {
+			this.freq = freq;
+		}
+	    
+	    
+}

@@ -1,0 +1,30 @@
+package com.datastructure;
+
+public class PairNode {
+
+	public int element;
+	public PairNode firstChild;
+	public PairNode leftSibling;
+	public PairNode rightSibling;
+	public PairNode leftChild;
+	public PairNode rightChild;
+	public int freq;
+
+	/* Constructor */
+	public PairNode(int node, int freq, PairNode firstChild,
+			PairNode leftSibling, PairNode rightSibling, PairNode leftChild,
+			PairNode rightChild) {
+		this.freq = freq;
+		this.element = node;
+		this.firstChild = firstChild;
+		this.leftSibling = null;
+		this.rightSibling = null;
+		this.leftChild= leftChild;
+		this.rightChild= rightChild;
+	}
+
+	public PairNode() {
+		// TODO Auto-generated constructor stub
+		super();
+	}
+}

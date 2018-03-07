@@ -1,0 +1,14 @@
+package com.table;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class FrequencyCalculator {
+
+	Map<Integer, Integer> freqMap = new HashMap<Integer, Integer>();
+
+	private void getFrequencies() {
+		// TODO Auto-generated method stub
+
+	}
+}

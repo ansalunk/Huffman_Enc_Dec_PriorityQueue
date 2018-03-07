@@ -1,0 +1,111 @@
+package com.datastructure;
+
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
+public class BinaryHeap {
+
+	/** The number of children each node has **/
+	private static final int d = 2;
+	private ArrayList<TreeNode> bHeap;
+
+	/** Constructor **/
+	public BinaryHeap() {
+		bHeap = new ArrayList<TreeNode>();
+	}
+
+	/** Function to check if heap is empty **/
+	public boolean isEmpty() {
+		return bHeap.size() == 0;
+	}
+
+	/** Function to get index parent of i **/
+	private int parent(int i) {
+		return (i - 1) / d;
+	}
+
+	/** Function to insert element */
+	public void insert(TreeNode node) {
+
+		bHeap.add(node);
+		int currentSize = bHeap.size() - 1;
+		int posParent = parent(currentSize);
+		while (posParent != currentSize
+				&& bHeap.get(posParent).getFreq() > bHeap.get(currentSize)
+						.getFreq()) {
+			TreeNode temp = bHeap.get(currentSize);
+			bHeap.set(currentSize, bHeap.get(posParent));
+			bHeap.set(posParent, temp);
+			currentSize = posParent;
+			posParent = parent(currentSize);
+		}
+	}
+
+	/** Function to find least element **/
+	public TreeNode findMin() {
+		if (isEmpty())
+			throw new NoSuchElementException("Underflow Exception");
+		return bHeap.get(0);
+	}
+
+	/** Function to delete min element **/
+	public TreeNode deleteMin() {
+		/*
+		 * TreeNode keyItem = heap.get(0); delete(0); return keyItem;
+		 */
+		if (bHeap.size() <= 0)
+			throw new NoSuchElementException();
+		if (bHeap.size() == 0)
+			return bHeap.remove(0);
+		else {
+			TreeNode temp = bHeap.get(0);
+			int swapPos = bHeap.size() - 1;
+			bHeap.set(0, bHeap.get(swapPos));
+			bHeap.set(swapPos, temp);
+			TreeNode minNode = bHeap.remove(swapPos);
+			heapifyDown(0);
+
+			return minNode;
+		}
+
+	}
+
+	/** Function heapifyDown **/
+	private void heapifyDown(int posParent) {
+		int childPos = 2 * (posParent);
+		int i = 1;
+		int minValue = posParent;
+		while (i < 3) {
+			childPos++;
+			if (childPos < bHeap.size()) {
+				if (childPos < bHeap.size()
+						&& bHeap.get(childPos).getFreq() < heap.get(minValue)
+								.getFreq()) {
+					minValue = childPos;
+				}
+			}
+			i++;
+		}
+		if (minValue != posParent) {
+			TreeNode temp = heap.get(posParent);
+			heap.set(posParent, heap.get(minValue));
+			heap.set(minValue, temp);
+			heapifyDown(minValue);
+		}
+	}
+
+	
+	/** Function to print heap **/
+	public void printHeap() {
+		System.out.print("\nHeap = ");
+		for (int i = 0; i < heap.size(); i++)
+			System.out.println(heap.get(i).getNode() + " --->"
+					+ heap.get(i).getFreq());
+		System.out.println();
+	}
+
+	public int getHeapSize() {
+		return heap.size();
+	}
+
+}

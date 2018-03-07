@@ -1,0 +1,81 @@
+package com.huffmann;
+
+
+public class TreeNode implements Comparable<TreeNode> {
+   int freq;
+   int node;
+   public TreeNode left,right;
+   
+   TreeNode(int freq,TreeNode left,TreeNode right){
+      this.freq = freq;
+      this.left = left;
+      this.right = right;
+   }
+   
+   public TreeNode(){
+	     super();
+	   }
+   
+   public TreeNode(int freq){
+      this(freq,null,null);
+   }
+   
+   TreeNode(int node, int freq){
+      this.freq = freq;
+      this.node = node;
+      this.left = this.right = null;
+   }
+   
+   public boolean isLeaf(){
+      return left==null && right==null;
+   }
+   
+   public int compareTo(TreeNode other){
+      //TODO:  write this method!
+	   
+      return (int) (freq - other.freq);
+   }
+
+public TreeNode getLeft() {
+	return left;
+}
+
+public void setLeft(TreeNode left) {
+	this.left = left;
+}
+
+public TreeNode getRight() {
+	return right;
+}
+
+public void setRight(TreeNode right) {
+	this.right = right;
+}
+
+
+public int getFreq() {
+	return freq;
+}
+
+public void setFreq(int freq) {
+	this.freq = freq;
+}
+
+public int getNode() {
+	return node;
+}
+
+public void setNode(int node) {
+	this.node = node;
+}
+   
+}
+
+
+
+
+
+
+
+
+

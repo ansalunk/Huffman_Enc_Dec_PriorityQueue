@@ -1,0 +1,29 @@
+package com.datastructure;
+
+public class PairNode {
+
+	  int node;
+	    PairNode leftChild;
+	    PairNode nextSibling;
+	    PairNode prev;
+	    int freq;
+	 
+	    /* Constructor */
+	    /*public PairNode(int x)
+	    {
+	        node = x;
+	        leftChild = null;
+	        nextSibling = null;
+	        prev = null;
+	    }*/
+
+		public int getFreq() {
+			return freq;
+		}
+
+		public void setFreq(int freq) {
+			this.freq = freq;
+		}
+	    
+	    
+}

@@ -1,0 +1,120 @@
+package com.datastructure;
+
+import java.util.ArrayList;
+
+public class PairingHeap {
+	
+	public PairNode min;
+	
+	public PairingHeap(){
+		min = null;
+	}
+	
+	public PairNode meld(PairNode tree1, PairNode tree2){
+		
+		if(tree1.freq >= tree2.freq){
+			tree1.leftSibling = tree2;
+			if(tree2.firstChild !=null){
+				tree2.firstChild.leftSibling = tree1;
+				tree1.rightSibling = tree2.firstChild;
+				
+			}
+			tree2.firstChild = tree1;
+			if(min == tree1){
+				min=tree2;
+			}
+			return tree2;
+		}
+		else{
+			tree2.leftSibling = tree1;
+			if(tree1.firstChild !=null){
+				tree1.firstChild.leftSibling = tree2;
+				tree2.rightSibling = tree1.firstChild;
+				
+			}
+			tree1.firstChild = tree2;
+			if(min == tree2){
+				min=tree1;
+			}
+			return tree1;
+		}
+	}
+	
+	public void insert(PairNodeNode node){
+		if(min == null){
+			min = node;
+		}
+		else{
+			meld(min,node);
+		}
+	}
+	
+	public PNode removeMin() throws Exception{
+		if(min == null){
+			throw new Exception("Heap empty...!");
+		}
+		else if(min.firstChild == null){
+			PNode temp = min;
+			min=null;
+			return temp;
+		}
+		else{
+			PNode child = min.firstChild;
+			ArrayList<PNode> q = new ArrayList<PNode>();
+			while(child!=null){
+				child.leftSibling = null;
+				PNode rightMove = child.rightSibling;
+				child.rightSibling=null;
+				q.add(child);
+				child = rightMove;
+			}
+			PNode temp = min;
+			
+			min.firstChild.leftSibling=null;
+			temp.firstChild = null;
+			min=null;
+
+			while(q.size()>1){
+				PNode newNode = meld(q.remove(0),q.remove(0));
+				q.add(newNode);
+			}
+			min = q.get(0);
+			return temp;
+		}
+	}
+	
+	public PNode huff() throws Exception{
+		while(min.firstChild!=null){
+			PNode n1 = removeMin();
+			PNode n2 = removeMin();
+			PNode nw = new PNode(-1,n1.frequency+n2.frequency,null,null,null,n1,n2);
+			insert(nw);
+		}
+		return min;
+	}
+	
+	public ArrayList<Code> printTree(PNode root){
+		ArrayList <Code> code = new ArrayList<Code>();
+		if(root == null){return null;}
+		traverse(code,root.leftChild,"0");
+		traverse(code,root.rightChild,"1");
+		return code;
+	}
+	
+	public void traverse(ArrayList<Code> code, PNode node, String path){
+		if(node==null){
+			return;
+		}
+		else if(node.leftChild==null && node.rightChild==null){
+			code.add(new Code(node.data,path));
+		}
+		else{
+			if(node.leftChild!=null){
+				traverse(code,node.leftChild,path+"0");
+			}
+			if(node.rightChild!=null){
+				traverse(code,node.rightChild,path+"1");
+			}
+		}		
+	}
+}
